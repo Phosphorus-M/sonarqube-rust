@@ -1,0 +1,36 @@
+# Sonarqube Rust
+
+We are using [the unofficial plugin of Sonarqube](https://github.com/elegoff/sonar-rust) made by [Elegoff](https://github.com/elegoff).
+
+## Getting started
+
+```
+docker-compose up
+```
+
+Open a tab in the browser with the address:
+`http://localhost:9000/`
+
+```
+User: admin
+Password: admin
+```
+
+Download [the unofficial plugin of Sonarqube](https://github.com/elegoff/sonar-rust/releases) (Yes, the jar) 
+
+Put it in the path `sonarqube/extensions`
+
+Generate your project and use the following commands to charge all configs:
+
+```bash
+cargo clippy --message-format=json > clippy.json  -- -W clippy::nursery -W  clippy::pedantic
+
+sonar-scanner \ 
+  -Dcommunity.rust.clippy.reportPaths=clippy.json \
+  -Dsonar.projectKey=<Your Project> \
+  -Dsonar.sources=. \
+  -Dsonar.host.url=http://localhost:9000 \
+  -Dsonar.token=<YOUR TOKEN>
+```
+
+
